@@ -18,11 +18,11 @@ services:
     volumes:
       - ./src:/usr/src/app
     ports:
-      - "8088:8000"
+      - "8080:8000"
     networks:
       - network_project
     restart: unless-stopped
-    command: sh -c "pip install aio-pika && python worker/SintegraGoias/consumer_sintegra_goias.py"
+    command: sh -c "pip install -r worker/requirements.txt && python worker/sintegra_goais/consumer_sintegra_goias.py"
 
   redis:
     image: redis:7.4.1-alpine
