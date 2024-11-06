@@ -1,0 +1,39 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4.0.2-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
+      - ./.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - network_project
+
+  worker:
+    image: python:3.14.0a1-alpine3.20
+    container_name: worker
+    working_dir: /usr/src/app
+    volumes:
+      - ./src:/usr/src/app
+    ports:
+      - "8088:8000"
+    networks:
+      - network_project
+    restart: unless-stopped
+    command: sh -c "pip install aio-pika && python worker/SintegraGoias/consumer_sintegra_goias.py"
+
+  redis:
+    image: redis:7.4.1-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - ./.docker-conf/redis/data:/data
+
+networks:
+  network_project:
+    driver: bridge
