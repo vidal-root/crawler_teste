@@ -2,8 +2,8 @@ import json
 import requests
 import logging
 from bs4 import BeautifulSoup
-from worker.sintegra_goias.models.sintegra_goias_retorno import SintegraGoiasRetorno
-from services.redis_service import RedisService
+from sintegra_goias.models.sintegra_goias_retorno import SintegraGoiasRetorno
+from sintegra_goias.services.redis_service import RedisService
 
 class SintegraGoiasController:
 

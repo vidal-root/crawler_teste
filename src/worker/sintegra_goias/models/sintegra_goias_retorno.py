@@ -1,4 +1,5 @@
 import json
+import re
 
 class SintegraGoiasRetorno:
 
@@ -24,6 +25,10 @@ class SintegraGoiasRetorno:
         retorno_formatado['nome_fantasia'] =  self.getLabelText('Nome Fantasia')
                
         retorno_formatado['endereco_estabelecimento'] =  self.getLabelText('Endereço Estabelecimento ', 'div')
+        
+        retorno_formatado['atividade_principal'] =  self.getAtividadePrincipal()
+        
+        retorno_formatado['atividade_secundaria'] =  self.getAtividadesSecundarias()
            
         retorno_formatado['informacoes_complementares'] = {
             "unidade_auxiliar": self.getLabelText('Unidade Auxiliar:'),
@@ -47,7 +52,30 @@ class SintegraGoiasRetorno:
                 return dado_text.text.strip()
         
         return ""
-
+    
+    def getAtividadePrincipal(self):
+        dado = self.html_site.find('strong', string="Atividade Principal")
+        if dado:
+            dado_text = dado.find_parent().find_next_sibling('span', class_='label_text')
+            if dado_text:
+                return dado_text.text.strip()
+        
+        return ""
+    
+    def getAtividadesSecundarias(self):
+        atividade_secundaria = self.html_site.find('strong', string="Atividade Secundária")
+        if atividade_secundaria:
+            # Encontrar o próximo irmão que contém os CNAEs
+            atividades_secundarias = []
+            for span in atividade_secundaria.find_parent().find_all_next('span', class_='label_text'):
+                # Apenas as linhas que contem numero CNAE
+                cnae_text = span.text.strip()
+                if re.match(r'^\d{7} -', cnae_text):  # Verifica se é um CNAE
+                    atividades_secundarias.append(cnae_text)
+            
+            return atividades_secundarias
+            
+        return []
 
     def to_json(self):
         return json.dumps(self.tratar_dados(), indent=4)

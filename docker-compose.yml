@@ -16,7 +16,7 @@ services:
     container_name: worker
     working_dir: /usr/src/app
     volumes:
-      - ./src:/usr/src/app
+      - ./src/worker:/usr/src/app
     ports:
       - "8080:8000"
     networks:
@@ -29,7 +29,33 @@ services:
       REDIS_HOST: redis
       PYTHONPATH: /usr/src/app
     restart: unless-stopped
-    command: sh -c "pip install -r worker/requirements.txt && python worker/sintegra_goias/consumer_sintegra_goias.py"
+    command: sh -c "pip install -r requirements.txt && python sintegra_goias/consumer_sintegra_goias.py"
+
+  api:
+    image: python:3.10-alpine
+    container_name: api
+    working_dir: /usr/src/app
+    volumes:
+      - ./src/app:/usr/src/app
+    ports:
+      - "8000:8000"
+    networks:
+      - network_project
+    depends_on:
+      - rabbitmq
+      - redis
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      REDIS_HOST: redis
+      PYTHONPATH: /usr/src/app
+    restart: unless-stopped
+    command: >
+      sh -c "
+        apk update &&
+        apk add rust cargo build-base &&  # Instala o Rust e ferramentas de compilação
+        pip install -r requirements.txt &&  # Instala as dependências do Python
+        uvicorn routers.app:app --host 0.0.0.0 --port 8000  # Roda o FastAPI
+      "
 
   redis:
     image: redis:7.4.1-alpine
