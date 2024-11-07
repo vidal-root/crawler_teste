@@ -21,8 +21,15 @@ services:
       - "8080:8000"
     networks:
       - network_project
+    depends_on:
+      - rabbitmq
+      - redis
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      REDIS_HOST: redis
+      PYTHONPATH: /usr/src/app
     restart: unless-stopped
-    command: sh -c "pip install -r worker/requirements.txt && python worker/sintegra_goais/consumer_sintegra_goias.py"
+    command: sh -c "pip install -r worker/requirements.txt && python worker/sintegra_goias/consumer_sintegra_goias.py"
 
   redis:
     image: redis:7.4.1-alpine
@@ -33,6 +40,8 @@ services:
     command: redis-server --save 20 1 --loglevel warning
     volumes: 
       - ./.docker-conf/redis/data:/data
+    networks:
+      - network_project
 
 networks:
   network_project:

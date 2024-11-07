@@ -2,7 +2,7 @@ import redis
 import logging
 
 class RedisService:
-    def __init__(self, host='10.13.13.236', port=6379, db=0):
+    def __init__(self, host="redis", port=6379, db=0):
         self.host = host
         self.port = port
         self.db = db
