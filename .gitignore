@@ -1,2 +1,2 @@
-.docker-conf/
+/docker-conf/
 src/worker/supervisord.log
