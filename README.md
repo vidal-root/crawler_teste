@@ -55,7 +55,7 @@ curl --location --request POST 'http://10.13.13.236:8000/scrape' \
 - Rodar o teste de API: `docker exec -it api pytest`
 
 ## Observações
-Adicionei o supervisor para subir o consumidor, assim nao preciso chamar direto o arquivo ou adiconar um cron por exemplo e tenho mais logs, consigo também setar facilmente o numero de consumidor (No projeto em questão esta com 2 consumidores).
+Adicionei o supervisor para subir o consumidor, assim não preciso chamar direto o arquivo ou adicionar um cron por exemplo e tenho mais logs, consigo também setar facilmente o numero de consumidor (No projeto em questão esta com 2 consumidores).
 Existem alguns arquivos "duplicados", mas fiz isso considerando que são projetos separados.
 
 Comandos docker-compose:
