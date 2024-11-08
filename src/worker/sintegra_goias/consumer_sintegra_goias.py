@@ -1,7 +1,6 @@
 import aio_pika
 import asyncio
 import json
-import sys
 from config.rabbit_config import rabbit
 from controllers.sintegra_goias_controller import SintegraGoiasController
 
@@ -30,8 +29,6 @@ class RabbitMQConsumer:
             sintegra_goias_controller = SintegraGoiasController()
             
             sintegra_goias_controller.scraping(msg)
-            
-            sys.stdout.flush()
 
 
     async def consume(self):
