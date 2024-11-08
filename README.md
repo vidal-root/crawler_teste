@@ -39,7 +39,7 @@ docker-compose ps
 ```
 
 ## Acessos e Rotas
-- Acessar interface web RabbitMQ: `http://localhost:15672/` ou `http://{IPVM}:15672/` (caso tenha)
+- Acessar interface web RabbitMQ: `http://localhost:15672/` ou `http://{IPVM}:15672/` (caso tenha) usuario:crawler senha:rabbit
 - Acessar Redis-Cli: `docker exec -it redis redis-cli`
 - Rota (POST) /scrape: `http://localhost:8000/scrape`
 ```sh
