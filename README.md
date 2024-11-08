@@ -41,7 +41,7 @@ docker-compose ps
 ## Acessos e Rotas
 - Acessar interface web RabbitMQ: `http://localhost:15672/` ou `http://{IPVM}:15672/` (caso tenha)
 - Acessar Redis-Cli: `docker exec -it redis redis-cli`
-- Rota /scrape: `http://localhost:8000/scrape`
+- Rota (POST) /scrape: `http://localhost:8000/scrape`
 ```sh
 {
     "cnpj": "00012377000160"
@@ -55,7 +55,7 @@ curl --location --request POST 'http://10.13.13.236:8000/scrape' \
     "cnpj": "00012377000160"
 }'
 ```
-- Rota /results/{task_id}: `http://localhost:8000/results/{task_id}`
+- Rota (GET) /results/{task_id}: `http://localhost:8000/results/{task_id}`
 - Rodar o teste de API: `docker exec -it api pytest`
 
 ## Observações
