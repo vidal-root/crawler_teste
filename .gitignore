@@ -1,2 +1,3 @@
 /docker-conf/
 src/worker/supervisord.log
+src/worker/supervisord.pid
