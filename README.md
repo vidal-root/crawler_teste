@@ -24,7 +24,11 @@ git clone https://github.com/vidal-root/crawler_teste.git
 ```sh
 cd crawler_teste/
 ```
-3. Para iniciar
+3. Permissao na pasta
+```sh
+chmod o+w * -R
+```
+4. Para iniciar
 ```sh
 docker-compose up
 ```
