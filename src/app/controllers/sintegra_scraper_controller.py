@@ -1,5 +1,6 @@
 import secrets
 import json
+import re
 
 from datetime import datetime
 from models.response_api_model import ResponseApiModel
@@ -14,8 +15,10 @@ class SintegraScraperController:
         if not cnpj:
             return ResponseApiModel("", {"msg": "CNPJ é obrigatório"}, 'NAO').send()
     
-        if len(cnpj) != 14 or not cnpj.isdigit():
-            return ResponseApiModel("", {"msg": "CNPJ deve ter 14 dígitos e ser numérico"}, 'NAO').send()
+        cnpj = re.sub(r'\D', '', cnpj)
+    
+        if len(cnpj) != 14:
+            return ResponseApiModel("", {"msg": "CNPJ deve ter 14 dígitos"}, 'NAO').send()
         
         task_id = self.gera_task_id()
         
