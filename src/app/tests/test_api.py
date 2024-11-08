@@ -23,8 +23,8 @@ def teste_scrape_cnpj_invalido():
     body = {"cnpj": "12345"}
     response = client.post("/scrape", json=body)
     assert response.status_code == 200
-    assert response.json() == {"msg": "CNPJ deve ter 14 dígitos e ser numérico"} 
-
+    assert "CNPJ deve ter 14 dígitos" in response.json()['content']['msg']
+    
 def teste_resultados_task():
     # testa a rota com um task_id fictício
     task_id = "1b84980b37370d59_20241108034959"

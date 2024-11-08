@@ -1,6 +1,7 @@
 import json
 import re
 
+#class para tratar o html
 class SintegraGoiasRetorno:
 
     def __init__(self, html_site):
@@ -66,12 +67,12 @@ class SintegraGoiasRetorno:
     def getAtividadesSecundarias(self):
         atividade_secundaria = self.html_site.find('strong', string="Atividade Secundária")
         if atividade_secundaria:
-            # Encontrar o próximo irmão que contém os CNAEs
+            # encontrar o próximo irmao que contém os CNAEs
             atividades_secundarias = []
             for span in atividade_secundaria.find_parent().find_all_next('span', class_='label_text'):
-                # Apenas as linhas que contem numero CNAE
+                # apenas as linhas que contem numero CNAE
                 cnae_text = span.text.strip()
-                if re.match(r'^\d{7} -', cnae_text):  # Verifica se é um CNAE
+                if re.match(r'^\d{7} -', cnae_text):  # verifica se é um CNAE
                     atividades_secundarias.append(cnae_text)
             
             return atividades_secundarias
@@ -80,6 +81,7 @@ class SintegraGoiasRetorno:
 
     def to_json(self):
         
+        # padrao para salvar no redis
         dados = {
             "status_task": "processado",
             "dados_processados": self.tratar_dados()
