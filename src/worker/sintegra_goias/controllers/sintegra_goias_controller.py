@@ -1,6 +1,7 @@
 import json
 import requests
 import logging
+import sys
 from bs4 import BeautifulSoup
 from sintegra_goias.models.sintegra_goias_retorno import SintegraGoiasRetorno
 from sintegra_goias.services.redis_service import RedisService
@@ -21,6 +22,9 @@ class SintegraGoiasController:
         }
     
     def scraping(self, msg):
+        
+        print(msg)
+        sys.stdout.flush()
         
         payload = {
             "rTipoDoc": "2",
@@ -46,6 +50,6 @@ class SintegraGoiasController:
             
             cache = RedisService()
             
-            cache.set(msg['task'], sintegra_retorno.to_json());
+            cache.set(msg['task_id'], sintegra_retorno.to_json());
             
             cache.close()

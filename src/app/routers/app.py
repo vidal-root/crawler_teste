@@ -11,14 +11,16 @@ def home():
 
 @app.post("/scrape")
 async def scrape(request: Request):
-    # Aguardando para obter o corpo da requisição como JSON (assíncrono)
-    body = await request.json()  # Usando 'await' para resolver o corpo da requisição
+
+    body = await request.json()
     
-    # Passando o corpo para o controller (por exemplo, você poderia passar um campo específico)
-    response = SintegraScraperController().inserir_fila(body)
+    response = await SintegraScraperController().inserir_fila(body)
     
     return response
 
 @app.get("/results/{task_id}")
-def results(task_id: str, q: Union[str, None] = None):
-    return {"task_id": task_id, "q": q}
+def results_task(task_id: str):
+    
+    response = SintegraScraperController().get_task(task_id)
+    
+    return response

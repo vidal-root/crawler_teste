@@ -2,7 +2,7 @@ import aio_pika
 import asyncio
 import json
 import sys
-from rabbit_config import rabbit
+from config.rabbit_config import rabbit
 from controllers.sintegra_goias_controller import SintegraGoiasController
 
 class RabbitMQConsumer:

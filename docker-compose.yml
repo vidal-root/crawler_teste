@@ -17,6 +17,7 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./src/worker:/usr/src/app
+      - ./src/worker/supervisor/sintegra_goias.conf:/etc/supervisor/conf.d/sintegra_goias.conf
     ports:
       - "8080:8000"
     networks:
@@ -29,7 +30,12 @@ services:
       REDIS_HOST: redis
       PYTHONPATH: /usr/src/app
     restart: unless-stopped
-    command: sh -c "pip install -r requirements.txt && python sintegra_goias/consumer_sintegra_goias.py"
+    command: >
+      sh -c "apk update && 
+             apk add --no-cache supervisor && 
+             mkdir -p /var/log/supervisor &&
+             pip install -r requirements.txt && 
+             supervisord -c /etc/supervisor/conf.d/sintegra_goias.conf"
 
   api:
     image: python:3.10-alpine

@@ -53,6 +53,7 @@ class SintegraGoiasRetorno:
         
         return ""
     
+    #funcionamento para pegar os cnes é diferente
     def getAtividadePrincipal(self):
         dado = self.html_site.find('strong', string="Atividade Principal")
         if dado:
@@ -78,5 +79,11 @@ class SintegraGoiasRetorno:
         return []
 
     def to_json(self):
-        return json.dumps(self.tratar_dados(), indent=4)
+        
+        dados = {
+            "status_task": "processado",
+            "dados_processados": self.tratar_dados()
+        }
+        
+        return json.dumps(dados, indent=4)
 
