@@ -1,5 +1,6 @@
 import secrets
 import json
+import re
 
 from datetime import datetime
 from models.response_api_model import ResponseApiModel
@@ -8,28 +9,33 @@ from services.redis_service import RedisService
 
 class SintegraScraperController:
     
-    async def inserir_fila(self, body):
+    async def criar_task(self, body):
         cnpj = body.get("cnpj", None)
         
+        #validacoes basicas
         if not cnpj:
             return ResponseApiModel("", {"msg": "CNPJ é obrigatório"}, 'NAO').send()
     
-        if len(cnpj) != 14 or not cnpj.isdigit():
-            return ResponseApiModel("", {"msg": "CNPJ deve ter 14 dígitos e ser numérico"}, 'NAO').send()
+        cnpj = re.sub(r'\D', '', cnpj)
+    
+        if len(cnpj) != 14:
+            return ResponseApiModel("", {"msg": "CNPJ deve ter 14 dígitos"}, 'NAO').send()
         
         task_id = self.gera_task_id()
         
         try:
             
+            # enviando mensagem para fila
             producer = RabbitMQProducer()
             
             await producer.send_message(
-                "CRAWLER_CNPJ_SINTEGRA_GOIAS",  # Nome da fila
-                {"task_id": task_id, "cnpj": cnpj}  # Mensagem a ser enviada
+                "CRAWLER_CNPJ_SINTEGRA_GOIAS",
+                {"task_id": task_id, "cnpj": cnpj}
             )
             
             await producer.close()
             
+            # salva no redis
             cache = RedisService()
             
             cache.set(task_id, json.dumps({"status_task": "em_andamento", "dados_processados": {}}));
@@ -45,6 +51,7 @@ class SintegraScraperController:
         
         if task_id:
     
+            #pega informacao do redis
             cache = RedisService()
                 
             task = cache.get(task_id);

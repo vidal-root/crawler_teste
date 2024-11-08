@@ -23,9 +23,6 @@ class SintegraGoiasController:
     
     def scraping(self, msg):
         
-        print(msg)
-        sys.stdout.flush()
-        
         payload = {
             "rTipoDoc": "2",
             "tDoc": msg['cnpj'],
@@ -46,6 +43,7 @@ class SintegraGoiasController:
             
             html_site = BeautifulSoup(response.text, 'html.parser')
 
+            # chama class de retrono para tratar o html
             sintegra_retorno = SintegraGoiasRetorno(html_site)
             
             cache = RedisService()

@@ -14,7 +14,7 @@ async def scrape(request: Request):
 
     body = await request.json()
     
-    response = await SintegraScraperController().inserir_fila(body)
+    response = await SintegraScraperController().criar_task(body)
     
     return response
 

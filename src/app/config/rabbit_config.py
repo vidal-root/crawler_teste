@@ -1,6 +1,6 @@
 rabbit = {
-    "User": "guest",
-    "Pass": "guest",
+    "User": "crawler",
+    "Pass": "rabbit",
     "Ip": "rabbitmq",
     "Port": 5672
 }

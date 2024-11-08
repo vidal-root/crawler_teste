@@ -8,6 +8,9 @@ services:
     volumes:
       - ./.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
       - ./.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=crawler
+      - RABBITMQ_DEFAULT_PASS=rabbit
     networks:
       - network_project
 
