@@ -9,7 +9,7 @@ O projeto utiliza 4 contêineres, são eles:
 1. `rabbitmq`: Container que possui o RabbitMQ para o uso de mensageria.
 2. `worker`: Container responsavel pelo "Consumidor" da estrutura de mensageria.
     - Obs: Utilizado o supervisor para subir os consumidores e numero de processo
-3. `api`: Container da API, responsavel pelas rotas.
+3. `api`: Container da API, responsavel pelas rotas, utilizando FAST API.
 4. `redis`: Conatiner responsavel pelo sistema de cache usando REDIS.
 
 ## Iniciando o Projeto via CONTAINER
