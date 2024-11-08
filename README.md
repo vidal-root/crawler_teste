@@ -63,12 +63,12 @@ Adicionei o supervisor para subir o consumidor, assim não preciso chamar direto
 Existem alguns arquivos "duplicados", mas fiz isso considerando que são projetos separados.
 
 Comandos docker-compose:
-docker-compose build: Realiza o apenas a etapa Build das imagens que serão usadas nos containers
-docker-compose start: Inicia os containers
-docker-compose stop: Para os containers
-docker-compose restart: Reinicia os containers
-docker-compose ps: Lista os containers
-docker-compose up: Cria e inicia os containers
-docker-compose down: Para e remove os containers
-docker-compose logs: Mostra o logs do containers
-docker-compose scale: Define o números de réplicas de um container
+- docker-compose build: Realiza o apenas a etapa Build das imagens que serão usadas nos containers
+- docker-compose start: Inicia os containers
+- docker-compose stop: Para os containers
+- docker-compose restart: Reinicia os containers
+- docker-compose ps: Lista os containers
+- docker-compose up: Cria e inicia os containers
+- docker-compose down: Para e remove os containers
+- docker-compose logs: Mostra o logs do containers
+- docker-compose scale: Define o números de réplicas de um container
