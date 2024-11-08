@@ -6,8 +6,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - ./.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
-      - ./.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - ./docker-conf/rabbitmq/data/:/var/lib/rabbitmq
+      - ./docker-conf/rabbitmq/log/:/var/log/rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=crawler
       - RABBITMQ_DEFAULT_PASS=rabbit
@@ -74,7 +74,7 @@ services:
       - '6379:6379'
     command: redis-server --save 20 1 --loglevel warning
     volumes: 
-      - ./.docker-conf/redis/data:/data
+      - ./docker-conf/redis/data:/data
     networks:
       - network_project
 
